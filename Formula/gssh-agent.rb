@@ -4,19 +4,19 @@ class GsshAgent < Formula
   license "MIT"
   version "1.0.0"
 
-  # Build from source (no download issues)
-  url "https://github.com/forechoandlook/gssh.git", tag: "v1.0.0", revision: "723537c"
-
-  depends_on "go" => :build
+  if OS.mac?
+    if Hardware::CPU.arm?
+      url "https://github.com/forechoandlook/gssh/releases/download/v1.0.0/gssh-darwin-arm64.tar.gz"
+      sha256 "6d10b8cad1384a326e85f9389f295103031a7102b6c1702a413101e3e134c369"
+    else
+      url "https://github.com/forechoandlook/gssh/releases/download/v1.0.0/gssh-darwin-amd64.tar.gz"
+      sha256 "TODO"
+    end
+  end
 
   def install
-    # Build CLI
-    system "go", "build", "-o", "bin/gssh", "cmd/gssh/main.go"
-    # Build daemon
-    system "go", "build", "-o", "bin/gssh-daemon", "cmd/daemon/main.go"
-
-    bin.install "bin/gssh"
-    bin.install "bin/gssh-daemon"
+    bin.install "gssh"
+    bin.install "gssh-daemon"
   end
 
   def plist
