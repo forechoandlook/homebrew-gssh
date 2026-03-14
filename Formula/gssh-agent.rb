@@ -19,8 +19,6 @@ class GsshAgent < Formula
     bin.install "gssh-daemon"
   end
 
-  plist_options startup: true, keep_alive: true
-
   def plist
     <<~EOS
       <?xml version="1.0" encoding="UTF-8"?>
