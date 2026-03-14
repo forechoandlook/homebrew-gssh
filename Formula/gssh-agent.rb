@@ -7,10 +7,10 @@ class GsshAgent < Formula
   if OS.mac?
     if Hardware::CPU.arm?
       url "https://github.com/forechoandlook/gssh/releases/download/v1.0.0/gssh-darwin-arm64.tar.gz"
-      sha256 "TODO: update with actual sha256"
+      sha256 "6d10b8cad1384a326e85f9389f295103031a7102b6c1702a413101e3e134c369"
     else
       url "https://github.com/forechoandlook/gssh/releases/download/v1.0.0/gssh-darwin-amd64.tar.gz"
-      sha256 "TODO: update with actual sha256"
+      sha256 "TODO: update with actual sha256 for amd64"
     end
   end
 
