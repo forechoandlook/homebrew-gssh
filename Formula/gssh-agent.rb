@@ -1,4 +1,4 @@
-class Gssh < Formula
+class GsshAgent < Formula
   desc "SSH Session Manager for Agents"
   homepage "https://github.com/forechoandlook/gssh"
   license "MIT"
