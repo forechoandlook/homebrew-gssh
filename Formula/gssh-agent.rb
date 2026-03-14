@@ -17,13 +17,35 @@ class GsshAgent < Formula
   def install
     bin.install "gssh"
     bin.install "gssh-daemon"
-    prefix.install "com.gssh.daemon.plist"
   end
 
-  def post_install
-    (var/"log").mkdir if !var.exist?("log")
-    (Library/"LaunchAgents").mkdir unless (Library/"LaunchAgents").exist?
-    ln_sf "#{prefix}/com.gssh.daemon.plist", "#{Library}/LaunchAgents/com.gssh.daemon.plist"
+  plist_options startup: true, keep_alive: true
+
+  def plist
+    <<~EOS
+      <?xml version="1.0" encoding="UTF-8"?>
+      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+      <plist version="1.0">
+      <dict>
+          <key>Label</key>
+          <string>#{plist_name}</string>
+          <key>ProgramArguments</key>
+          <array>
+              <string>#{opt_bin}/gssh-daemon</string>
+              <string>-socket</string>
+              <string>/tmp/gssh.sock</string>
+          </array>
+          <key>RunAtLoad</key>
+          <true/>
+          <key>KeepAlive</key>
+          <true/>
+          <key>StandardOutPath</key>
+          <string>#{var}/log/gssh.log</string>
+          <key>StandardErrorPath</key>
+          <string>#{var}/log/gssh.error.log</string>
+      </dict>
+      </plist>
+    EOS
   end
 
   test do
